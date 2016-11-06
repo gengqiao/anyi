@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gq.dao.IStudentDao">
+	<insert id="insertStudent">
+		insert into student(name,age) values(#{name}, #{age})
+	<!-- <selectKey resultType="int" keyProperty="id">
+	  select @@identity
+	</selectKey> -->	
+	</insert>
+	
+	<select id="selectAllStudents" resultType="Student">
+	  select * from student
+	</select>
+	
+</mapper>
