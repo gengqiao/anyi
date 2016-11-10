@@ -2,9 +2,12 @@ package com.gq.dao;
 
 import com.gq.beans.PeSite;
 import com.gq.beans.PeSiteExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+@Repository("peSiteMapper")
 public interface PeSiteMapper {
     int countByExample(PeSiteExample example);
 

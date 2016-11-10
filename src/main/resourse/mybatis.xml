@@ -4,9 +4,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<package name="com.gq.beans"/>
+		<!-- <package name="com.gq.beans"/> -->
+		 <typeAlias type="com.gq.beans.EnumConst" alias="EnumConst" /> 
+		 <typeAlias type="com.gq.beans.PeSite" alias="PeSite" /> 
+		 <typeAlias type="com.gq.beans.SsoUser" alias="SsoUser" /> 
+		 
 	</typeAliases>
 	<mappers>
-		<package name="com.gq.mapping"/>
+ 		<package name="com.gq.dao"/>
 	</mappers>
 </configuration>

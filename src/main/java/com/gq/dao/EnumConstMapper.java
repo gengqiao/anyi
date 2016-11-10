@@ -2,8 +2,12 @@ package com.gq.dao;
 
 import com.gq.beans.EnumConst;
 import com.gq.beans.EnumConstExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+@Repository("enumConstMapper")
 
 public interface EnumConstMapper {
     int countByExample(EnumConstExample example);

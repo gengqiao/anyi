@@ -2,9 +2,12 @@ package com.gq.dao;
 
 import com.gq.beans.SsoUser;
 import com.gq.beans.SsoUserExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+@Repository("ssoUserMapper")
 public interface SsoUserMapper {
     int countByExample(SsoUserExample example);
 
@@ -19,6 +22,8 @@ public interface SsoUserMapper {
     List<SsoUser> selectByExample(SsoUserExample example);
 
     SsoUser selectByPrimaryKey(Integer id);
+    
+    SsoUser selectByLoginId(String loginId);
 
     int updateByExampleSelective(@Param("record") SsoUser record, @Param("example") SsoUserExample example);
 

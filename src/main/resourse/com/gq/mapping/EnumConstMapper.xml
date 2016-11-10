@@ -150,7 +150,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.beans.EnumConstExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.beans.EnumConstExample" resultMap="java.lang.Integer">
     select count(*) from enum_const
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -365,7 +365,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benans.EnumConstExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benans.EnumConstExample" resultMap="java.lang.Integer">
     select count(*) from enum_const
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -580,7 +580,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benas.EnumConstExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benas.EnumConstExample" resultMap="java.lang.Integer">
     select count(*) from enum_const
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -795,7 +795,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.service.EnumConstExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.service.EnumConstExample" resultMap="java.lang.Integer">
     select count(*) from enum_const
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

@@ -99,6 +99,13 @@
     from sso_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByLoginId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sso_user
+    where loginId = #{loginid,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sso_user
     where id = #{id,jdbcType=INTEGER}
@@ -166,7 +173,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.beans.SsoUserExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.beans.SsoUserExample" resultMap="java.lang.Integer">
     select count(*) from sso_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -413,7 +420,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benans.SsoUserExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benans.SsoUserExample" resultMap="java.lang.Integer">
     select count(*) from sso_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -660,7 +667,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benas.SsoUserExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benas.SsoUserExample" resultMap="java.lang.Integer">
     select count(*) from sso_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -907,7 +914,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.service.SsoUserExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.service.SsoUserExample" resultMap="java.lang.Integer">
     select count(*) from sso_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

@@ -166,7 +166,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.beans.PeSiteExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.beans.PeSiteExample" resultMap="java.lang.Integer">
     select count(*) from pe_site
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -413,7 +413,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benans.PeSiteExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benans.PeSiteExample" resultMap="java.lang.Integer">
     select count(*) from pe_site
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -660,7 +660,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.benas.PeSiteExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.benas.PeSiteExample" resultMap="java.lang.Integer">
     select count(*) from pe_site
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -907,7 +907,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gq.service.PeSiteExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.gq.service.PeSiteExample" resultMap="java.lang.Integer">
     select count(*) from pe_site
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
