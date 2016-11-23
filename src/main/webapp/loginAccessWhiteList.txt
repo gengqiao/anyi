@@ -1,0 +1,13 @@
+*.jpg
+*.gif
+*.png
+*.css
+*.js
+*.swf
+*.flv
+*.mp4
+/js/*
+/css/*
+/sso/login.do
+/login.jsp
+/sso/authimg
