@@ -23,14 +23,15 @@
 	  <mvc:annotation-driven/>
 	 <!-- 控制器自动注入 -->
 	  <context:component-scan base-package="com.gq.*"/>
-	<!-- 视图解析器（返回的url自动拼接 ）-->
+	<!-- 视图解析器（返回的url自动拼接 ）
 	  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
             id="internalResourceViewResolver">
-        <!-- 前缀 -->
+               前缀 
         <property name="prefix" value="/WEB-INF/" />
-        <!-- 后缀 -->
+               后缀 
         <property name="suffix" value=".jsp" />
-    </bean>
+       
+    </bean> -->
 </beans>
 
 
