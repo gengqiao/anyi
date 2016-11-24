@@ -11,3 +11,4 @@
 /sso/login.do
 /login.jsp
 /sso/authimg
+/error/*
