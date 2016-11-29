@@ -1,11 +1,13 @@
 package com.gq.service.imp;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.gq.beans.PeRole;
 import com.gq.beans.SsoUser;
 import com.gq.dao.SsoUserMapper;
 import com.gq.service.SsoService;
@@ -26,6 +28,26 @@ SsoUserMapper ssoUserMapper;
 		  ssoUserMapper.updateByPrimaryKey(s);
 		}
 		return s;
+	}
+	@Override
+	public int addUser(SsoUser ssoUser) {
+		return ssoUserMapper.insert(ssoUser);
+	}
+	@Override
+	public SsoUser selectByLoginId(String loginId) {
+		// TODO Auto-generated method stub
+		return ssoUserMapper.selectByLoginId(loginId);
+	}
+	@Override
+	public List<PeRole> selectValideRole() {
+		//只查询有效数据
+		Integer isvalide=0;
+		return ssoUserMapper.selectAllRole(isvalide);
+	}
+	public List<SsoUser> selectValideUser(){
+		//只查询有效数据 
+		Integer isvalide=0;
+		return ssoUserMapper.selectAllSsoUse(isvalide);
 	}
 
 }

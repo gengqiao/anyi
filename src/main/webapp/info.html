@@ -15,13 +15,13 @@
 <div class="panel admin-panel">
   <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 添加用户信息</strong></div>
   <div class="body-content">
-    <form method="post" class="form-x" action="/sso/login.do">
+    <form method="post" class="form-x" action="/sso/addUser.do">
       <div class="form-group">
         <div class="label">
           <label>用户名：</label>
         </div>
         <div class="field">
-          <input type="text" class="input" name="loginid" style="width:25%; float:left;" />
+          <input type="text" class="input  w50" name="loginid" data-validate="required:必填,mobile:用户名必须为11位手机号,ajax#/sso/checkLoginId.do?loginId=:该账号已存在" placeholder="请输入用户名"  />
           <div class="tips"></div>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <label>密码：</label>
         </div>
         <div class="field">
-          <input type="password" class="input" name="password" style="width:25%; float:left;" />
+          <input type="password" class="input w50" name="password" size="50" placeholder="请输入密码" data-validate="required:请输入密码,length#>=5:密码不能小于5位" />         
           <div class="tips"></div>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <label>姓名：</label>
         </div>
         <div class="field">
-          <input type="text" class="input" name="name" style="width:25%; float:left;" />
+          <input type="text" class="input w50" name="userName" data-validate="chinese:姓名必须为中文" placeholder="请输入用户姓名" />
           <div class="tips"></div>
         </div>
       </div>
@@ -48,7 +48,7 @@
           <label>电话：</label>
         </div>
         <div class="field">
-          <input type="text" class="input" name="mobile" style="width:25%; float:left;" />
+          <input type="text" class="input w50" name="mobilePhone"  data-validate="mobile:仅能输入电话或手机" placeholder="请输入手机号，方便联系" />
           <div class="tips"></div>
         </div>
       </div>
@@ -57,7 +57,7 @@
           <label>邮箱：</label>
         </div>
         <div class="field">
-          <input type="text" class="input" name="email" style="width:25%; float:left;" />
+          <input type="text" class="input w50" name="email" data-validate="email:请输入正确的邮箱" placeholder="请输入用户邮箱"  />
           <div class="tips"></div>
         </div>
       </div>

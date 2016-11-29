@@ -2,43 +2,90 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gq.dao.SsoUserMapper">
 
- <insert id="insert" parameterType="com.gq.beans.SsoUser">
-    insert into sso_user ( loginId, password, 
-      loginNum, lastLoginDate, fk_site_id, 
-      isValide)
-    values ( #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{loginnum,jdbcType=INTEGER}, #{lastlogindate,jdbcType=TIMESTAMP}, #{fkSiteId,jdbcType=INTEGER}, 
-      #{isvalide,jdbcType=INTEGER})
-  </insert>
-  <select id="selectByLoginId" resultType="com.gq.beans.SsoUser">
-  select  id, loginId, password, loginNum, lastLoginDate, fk_site_id, isValide
-    from sso_user where loginId = #{loginid,jdbcType=VARCHAR}
+  <resultMap type="com.gq.beans.SsoUser" id="SsoUserMap">
+       <id property="id" column="id"/>
+      <result property="loginid" column="loginId" />
+	  <result property="password" column="password" />
+	  <result property="loginnum" column="loginNum" />
+	  <result property="lastlogindate" column="lastLoginDate" />
+	  <result property="isvalide" column="isValide" />
+	  <result property="userName" column="userName" />
+	  <result property="mobilePhone" column="mobilePhone"/>
+	  <result property="email" column="email"/>
+	  <association property="peRole" fetchType="lazy" column="fk_role_id" select="selectPeRoleById"/>
+  </resultMap>
+  
+  <resultMap type="com.gq.beans.PeRole" id="PeRoleMap">
+   <id property="id" column="id"/>
+   <result property="name" column="name"/>
+   <result property="isvalide" column="isvalide"/>
+  </resultMap>
+  
+  <select id="selectAllSsoUse" resultMap="SsoUserMap">
+        select * from sso_user where isvalide=#{isvalide,jdbcType=INTEGER}
   </select>
-   
-   <update id="updateByPrimaryKey" parameterType="com.gq.beans.SsoUser">
-    update sso_user
-    <set>
-      <if test="loginid != null">
-        loginId = #{loginid,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="loginnum != null">
-        loginNum = #{loginnum,jdbcType=INTEGER},
-      </if>
-      <if test="lastlogindate != null">
-        lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="fkSiteId != null">
-        fk_site_id = #{fkSiteId,jdbcType=INTEGER},
-      </if>
-      <if test="isvalide != null">
-        isValide = #{isvalide,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
   
-  
+  <select id="selectAllRole" resultMap="PeRoleMap">
+        select * from pe_role where isvalide=#{isvalide,jdbcType=INTEGER}
+  </select>
+  <!-- 通过id查询角色 -->
+  <select id="selectPeRoleById" resultType="com.gq.beans.PeRole">
+    select * from pe_role where id=#{id,jdbcType=INTEGER}
+  </select>
+	<select id="selectByLoginId" resultMap="SsoUserMap">
+		select * from sso_user where loginId = #{loginid,jdbcType=VARCHAR}
+	</select>
+
+
+	<update id="updateByPrimaryKey" parameterType="com.gq.beans.SsoUser">
+		update sso_user
+		<set>
+			<if test="loginid != null">
+				loginId = #{loginid,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="loginnum != null">
+				loginNum = #{loginnum,jdbcType=INTEGER},
+			</if>
+			<if test="lastlogindate != null">
+				lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fkSiteId != null">
+				fk_site_id = #{fkSiteId,jdbcType=INTEGER},
+			</if>
+			<if test="isvalide != null">
+				isValide = #{isvalide,jdbcType=INTEGER},
+			</if>
+			<if test="userName != null">
+				userName = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="mobilePhone != null">
+				mobilePhone = #{mobilePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="peRole != null">
+				fk_role_id = #{peRole.id,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 插入操作 -->
+	<insert id="insert" parameterType="com.gq.beans.SsoUser">
+		insert into sso_user ( loginId, password,
+		loginNum, lastLoginDate, fk_site_id,
+		isValide,userName,mobilePhone,email,fk_role_id)
+		values ( #{loginid,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+		#{loginnum,jdbcType=INTEGER}, #{lastlogindate,jdbcType=TIMESTAMP},
+		#{fkSiteId,jdbcType=INTEGER},
+		#{isvalide,jdbcType=INTEGER},
+		#{userName,jdbcType=VARCHAR},
+		#{mobilePhone,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{peRole.id,jdbcType=INTEGER})
+	</insert>
+
 </mapper>
