@@ -21,6 +21,12 @@
    <result property="isvalide" column="isvalide"/>
   </resultMap>
   
+
+   
+   <select id="selectSsoUseById" resultMap="SsoUserMap">
+        select * from sso_user where id=#{id,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectAllSsoUse" resultMap="SsoUserMap">
         select * from sso_user where isvalide=#{isvalide,jdbcType=INTEGER}
   </select>
@@ -35,7 +41,6 @@
 	<select id="selectByLoginId" resultMap="SsoUserMap">
 		select * from sso_user where loginId = #{loginid,jdbcType=VARCHAR}
 	</select>
-
 
 	<update id="updateByPrimaryKey" parameterType="com.gq.beans.SsoUser">
 		update sso_user
@@ -87,5 +92,7 @@
 		#{email,jdbcType=VARCHAR},
 		#{peRole.id,jdbcType=INTEGER})
 	</insert>
-
+  <delete id="delectUserById" >
+    DELETE from sso_user where id = #{id,jdbcType=INTEGER}
+  </delete>
 </mapper>

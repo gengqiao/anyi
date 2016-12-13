@@ -16,6 +16,7 @@ import com.gq.beans.PeRole;
 import com.gq.beans.SsoUser;
 import com.gq.constant.SsoConstant;
 import com.gq.service.SsoService;
+import com.gq.util.SendEmail;
 
 @Controller
 @RequestMapping("/sso")
@@ -23,14 +24,42 @@ public class UserController extends BaseController{
 	@Resource(name = "ssoServiceimp")
 	SsoService ssoService;
 	
-	private List<SsoUser> userList;
+	/**
+	 * 通过用户id更新用户信息
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody  
+	@RequestMapping(value = "/updateUserById")
+	public Object updateUserById(SsoUser ssoUser){
+		int i=ssoService.updateByPrimaryKey(ssoUser);
+		if(i==1){
+		 return true;
+		}
+		return false; 
+	}
+	/**
+	 * 通过用户id删除用户
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody  
+	@RequestMapping(value = "/delectUserById")
+	public Object delectUserById(Integer id){
+		int i=ssoService.delectUserById(id);
+		if(i==1){
+		return true;
+		}
+		return false; 
+	}
+	
 	/**
 	 * 展示用户列表
 	 * @return
 	 */
 	@RequestMapping(value = "/showUser")
 	public String showUser(){
-		userList=new ArrayList<SsoUser>();
+		List<SsoUser>	userList=new ArrayList<SsoUser>();
 		userList=ssoService.selectValideUser();
 		request.setAttribute("userList", userList);
 		return "/user/showUser.jsp";
@@ -44,6 +73,37 @@ public class UserController extends BaseController{
 	public Object selectValideRole(){
 	List<PeRole> rlist=	ssoService.selectValideRole();
 	 return rlist;
+	}
+	
+	/**
+	 * 更新密码
+	 * @param oldPass 旧密码
+	 * @param newPass 新密码
+	 * @param flag	状态为1时，验证密码是否正确 其余为修改密码
+	 * @return
+	 */
+	@ResponseBody  
+	@RequestMapping(value = "/changePassWord")
+	public Object changePassWord(String oldPass,String newPass,String flag){
+		SsoUser ssoUser=(SsoUser)session.getAttribute(SsoConstant.SSO_USER_SESSION);
+		Map<String,String> map=new HashMap<String,String>();
+		if("1".equals(flag)){
+			if(oldPass.equals(ssoUser.getPassword())){
+				map.put("getdata", "true");
+			}else{
+				map.put("getdata", "false");
+			}
+		}else{
+			ssoUser.setPassword(newPass);
+			int i=	ssoService.updateByPrimaryKey(ssoUser);
+			if(1==i){
+			 map.put("success", "true");
+			 session.setAttribute(SsoConstant.SSO_USER_SESSION, ssoUser);
+			}else{
+			  map.put("success", "false");  
+		  }
+		}
+		return map;
 	}
 	
 	/**
@@ -74,13 +134,23 @@ public class UserController extends BaseController{
 		//设置默认值为有效
 		ssoUser.setIsvalide(0);
 	   int i=ssoService.addUser(ssoUser);
-	   Map map=new HashMap();
+	   Map<String,Boolean> map=new HashMap<String,Boolean>();
 	   if(i==1){
 		   map.put("success", true);
+		   SendEmail.sendOnRegsterSuccess(ssoUser.getEmail(), ssoUser.getLoginid(),  ssoUser.getPassword());
 	   }else{
 		   map.put("success", false);
 	   }
 	   return map;
+	}
+	/**
+	 * 用户退出登录
+	 * @return
+	 */
+	@RequestMapping(value = "/loginOut")
+	public String loginOut(){
+		session.removeAttribute(SsoConstant.SSO_USER_SESSION);
+		return "/login.jsp";
 	}
 	/**
 	 * 用户登录

@@ -31,8 +31,26 @@ public interface SsoService {
     */
    public List<PeRole> selectValideRole();
    /**
+    * 通过id查询用户
+    * @param id
+    * @return
+    */
+   public SsoUser selectSsoUseById(Integer id);
+   /**
     * 查询有效的用户
     * @return
     */
    public List<SsoUser> selectValideUser();
+   /**
+    * 删除用户
+    * @param id
+    * @return
+    */
+   public int delectUserById(Integer id);
+   /**
+    * 更新用户信息
+    * @param ssoUser
+    * @return
+    */
+   public int updateByPrimaryKey(SsoUser ssoUser);
 }

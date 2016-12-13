@@ -49,5 +49,20 @@ SsoUserMapper ssoUserMapper;
 		Integer isvalide=0;
 		return ssoUserMapper.selectAllSsoUse(isvalide);
 	}
+	@Override
+	public int delectUserById(Integer id) {
+		// TODO Auto-generated method stub
+		return ssoUserMapper.delectUserById(id);
+	}
+	@Override
+	public int updateByPrimaryKey(SsoUser ssoUser) {
+		// TODO Auto-generated method stub
+		return  ssoUserMapper.updateByPrimaryKey(ssoUser);
+	}
+	@Override
+	public SsoUser selectSsoUseById(Integer id) {
+		// TODO Auto-generated method stub
+		return ssoUserMapper.selectSsoUseById(id);
+	}
 
 }

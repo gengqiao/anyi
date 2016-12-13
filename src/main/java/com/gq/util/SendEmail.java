@@ -13,10 +13,10 @@ import javax.mail.internet.MimeMessage;
 /** 
 * @className:SendEmail.java
 * @classDescription:
-* @author:gengqiao
 * @createTime:2016-11-25
 */
-public class SendEmail {
+public class SendEmail  {
+	
 	static String mailUser = "anyidate@163.com"; //用户名
 	static String pwd = "anyi005"; //你所要通过的帐号的密码是多少，也就是mailUser的密码
 	static String host = "smtp.163.com";
@@ -25,6 +25,18 @@ public class SendEmail {
 	public static void main(String[] args) throws NoSuchProviderException {
 		send("gengqiao@whaty.com","第一封JAVA邮件！","看看发邮件好用");
 	}
+   /**
+    * 添加用户成功以后自动发邮件
+    * @param email 邮箱
+    * @param loginId 用户名
+    * @param passWord 密码
+    */
+	public  static void sendOnRegsterSuccess(String email,String loginId,String passWord){
+		String title="安逸通知";
+		String content="你已经被管理员添加为安逸环境的项目人员；请登录www.aiyi.date查看任务；账号为："+loginId+";密码为："+passWord;
+		send(email, title, content);
+	}
+	
 /**
  * 邮件调用接口
  * @param email 
