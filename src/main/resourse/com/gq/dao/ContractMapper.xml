@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gq.dao.ContractMapper" >
+  <resultMap id="BaseResultMap" type="com.gq.beans.Contract" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="VARCHAR" />
+    <result column="registerDate" property="registerdate" jdbcType="TIMESTAMP" />
+    <result column="client" property="client" jdbcType="VARCHAR" />
+    <result column="projectName" property="projectname" jdbcType="VARCHAR" />
+    <result column="contractAmount" property="contractamount" jdbcType="DOUBLE" />
+    <result column="receipted" property="receipted" jdbcType="DOUBLE" />
+    <result column="containTax" property="containtax" jdbcType="VARCHAR" />
+    <result column="preliminary" property="preliminary" jdbcType="INTEGER" />
+    <result column="tianed" property="tianed" jdbcType="INTEGER" />
+    <result column="paied" property="paied" jdbcType="INTEGER" />
+    <result column="balance" property="balance" jdbcType="INTEGER" />
+    <result column="paymentDate" property="paymentdate" jdbcType="VARCHAR" />
+    <result column="qualificationsDate" property="qualificationsdate" jdbcType="TIMESTAMP" />
+    <result column="reportDate" property="reportdate" jdbcType="TIMESTAMP" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="contactsPhone" property="contactsphone" jdbcType="VARCHAR" />
+    <result column="jieqiaDate" property="jieqiadate" jdbcType="TIMESTAMP" />
+    <result column="hetongDate" property="hetongdate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+<!--     <result column="fk_user_id" property="fkUserId" jdbcType="INTEGER" />
+ -->    <result column="receiveDate" property="receivedate" jdbcType="TIMESTAMP" />
+    <result column="collectingData" property="collectingdata" jdbcType="TIMESTAMP" />
+    <result column="monitorDate" property="monitordate" jdbcType="TIMESTAMP" />
+    <result column="analysisDate" property="analysisdate" jdbcType="TIMESTAMP" />
+    <result column="gongcanDate" property="gongcandate" jdbcType="TIMESTAMP" />
+    <result column="neishenDate" property="neishendate" jdbcType="TIMESTAMP" />
+    <result column="expertDate" property="expertdate" jdbcType="TIMESTAMP" />
+    <result column="assessDate" property="assessdate" jdbcType="TIMESTAMP" />
+    <result column="scheduledDate" property="scheduleddate" jdbcType="TIMESTAMP" />
+    <result column="actualDate" property="actualdate" jdbcType="TIMESTAMP" />
+    <result column="getReplyDate" property="getreplydate" jdbcType="TIMESTAMP" />
+    <association property="ssoUser" fetchType="lazy" column="fk_user_id" select="selectSsoUserById"/>
+  </resultMap>
+  
+   <select id="selectSsoUserById" resultType="com.gq.beans.SsoUser">
+    select * from sso_user where id=#{id}
+  </select>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, seq, registerDate, client, projectName, contractAmount, receipted, containTax, 
+    preliminary, tianed, paied, balance, paymentDate, qualificationsDate, reportDate, 
+    contacts, contactsPhone, jieqiaDate, hetongDate, type, fk_user_id, receiveDate, 
+	collectingData, monitorDate, analysisDate, gongcanDate, neishenDate, expertDate, assessDate, scheduledDate, 
+    actualDate, getReplyDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gq.beans.ContractExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null" >
+      <if test="offset != null" >
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null" >
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gq.beans.ContractExample" >
+    delete from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gq.beans.Contract" >
+    insert into contract (id, seq, registerDate, 
+      client, projectName, contractAmount, 
+      receipted, containTax, preliminary, 
+      tianed, paied, balance, 
+      paymentDate, qualificationsDate, reportDate, 
+      contacts, contactsPhone, jieqiaDate, 
+      hetongDate, type, fk_user_id, 
+      receiveDate, collectingData, monitorDate, 
+      analysisDate, gongcanDate, neishenDate, 
+      expertDate, assessDate, scheduledDate, 
+      actualDate, getReplyDate)
+    values (#{id,jdbcType=INTEGER}, #{seq,jdbcType=VARCHAR}, #{registerdate,jdbcType=TIMESTAMP}, 
+      #{client,jdbcType=VARCHAR}, #{projectname,jdbcType=VARCHAR}, #{contractamount,jdbcType=DOUBLE}, 
+      #{receipted,jdbcType=DOUBLE}, #{containtax,jdbcType=VARCHAR}, #{preliminary,jdbcType=INTEGER}, 
+      #{tianed,jdbcType=INTEGER}, #{paied,jdbcType=INTEGER}, #{balance,jdbcType=INTEGER}, 
+      #{paymentdate,jdbcType=VARCHAR}, #{qualificationsdate,jdbcType=TIMESTAMP}, #{reportdate,jdbcType=TIMESTAMP}, 
+      #{contacts,jdbcType=VARCHAR}, #{contactsphone,jdbcType=VARCHAR}, #{jieqiadate,jdbcType=TIMESTAMP}, 
+      #{hetongdate,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, #{fkUserId,jdbcType=INTEGER}, 
+      #{receivedate,jdbcType=TIMESTAMP}, #{collectingdata,jdbcType=TIMESTAMP}, #{monitordate,jdbcType=TIMESTAMP}, 
+      #{analysisdate,jdbcType=TIMESTAMP}, #{gongcandate,jdbcType=TIMESTAMP}, #{neishendate,jdbcType=TIMESTAMP}, 
+      #{expertdate,jdbcType=TIMESTAMP}, #{assessdate,jdbcType=TIMESTAMP}, #{scheduleddate,jdbcType=TIMESTAMP}, 
+      #{actualdate,jdbcType=TIMESTAMP}, #{getreplydate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gq.beans.Contract" >
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="registerdate != null" >
+        registerDate,
+      </if>
+      <if test="client != null" >
+        client,
+      </if>
+      <if test="projectname != null" >
+        projectName,
+      </if>
+      <if test="contractamount != null" >
+        contractAmount,
+      </if>
+      <if test="receipted != null" >
+        receipted,
+      </if>
+      <if test="containtax != null" >
+        containTax,
+      </if>
+      <if test="preliminary != null" >
+        preliminary,
+      </if>
+      <if test="tianed != null" >
+        tianed,
+      </if>
+      <if test="paied != null" >
+        paied,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="paymentdate != null" >
+        paymentDate,
+      </if>
+      <if test="qualificationsdate != null" >
+        qualificationsDate,
+      </if>
+      <if test="reportdate != null" >
+        reportDate,
+      </if>
+      <if test="contacts != null" >
+        contacts,
+      </if>
+      <if test="contactsphone != null" >
+        contactsPhone,
+      </if>
+      <if test="jieqiadate != null" >
+        jieqiaDate,
+      </if>
+      <if test="hetongdate != null" >
+        hetongDate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="fkUserId != null" >
+        fk_user_id,
+      </if>
+      <if test="receivedate != null" >
+        receiveDate,
+      </if>
+      <if test="collectingdata != null" >      
+		collectingData,
+      </if>
+      <if test="monitordate != null" >
+        monitorDate,
+      </if>
+      <if test="analysisdate != null" >
+        analysisDate,
+      </if>
+      <if test="gongcandate != null" >
+        gongcanDate,
+      </if>
+      <if test="neishendate != null" >
+        neishenDate,
+      </if>
+      <if test="expertdate != null" >
+        expertDate,
+      </if>
+      <if test="assessdate != null" >
+        assessDate,
+      </if>
+      <if test="scheduleddate != null" >
+        scheduledDate,
+      </if>
+      <if test="actualdate != null" >
+        actualDate,
+      </if>
+      <if test="getreplydate != null" >
+        getReplyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null" >
+        #{registerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="client != null" >
+        #{client,jdbcType=VARCHAR},
+      </if>
+      <if test="projectname != null" >
+        #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="contractamount != null" >
+        #{contractamount,jdbcType=DOUBLE},
+      </if>
+      <if test="receipted != null" >
+        #{receipted,jdbcType=DOUBLE},
+      </if>
+      <if test="containtax != null" >
+        #{containtax,jdbcType=VARCHAR},
+      </if>
+      <if test="preliminary != null" >
+        #{preliminary,jdbcType=INTEGER},
+      </if>
+      <if test="tianed != null" >
+        #{tianed,jdbcType=INTEGER},
+      </if>
+      <if test="paied != null" >
+        #{paied,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="paymentdate != null" >
+        #{paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationsdate != null" >
+        #{qualificationsdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportdate != null" >
+        #{reportdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsphone != null" >
+        #{contactsphone,jdbcType=VARCHAR},
+      </if>
+      <if test="jieqiadate != null" >
+        #{jieqiadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hetongdate != null" >
+        #{hetongdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="fkUserId != null" >
+        #{fkUserId,jdbcType=INTEGER},
+      </if>
+      <if test="receivedate != null" >
+        #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectingdata != null" >
+        #{collectingdata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monitordate != null" >
+        #{monitordate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="analysisdate != null" >
+        #{analysisdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gongcandate != null" >
+        #{gongcandate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="neishendate != null" >
+        #{neishendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expertdate != null" >
+        #{expertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assessdate != null" >
+        #{assessdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleddate != null" >
+        #{scheduleddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualdate != null" >
+        #{actualdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getreplydate != null" >
+        #{getreplydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gq.beans.ContractExample" resultType="java.lang.Integer" >
+    select count(*) from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update contract
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.seq != null" >
+        seq = #{record.seq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerdate != null" >
+        registerDate = #{record.registerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.client != null" >
+        client = #{record.client,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectname != null" >
+        projectName = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractamount != null" >
+        contractAmount = #{record.contractamount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.receipted != null" >
+        receipted = #{record.receipted,jdbcType=DOUBLE},
+      </if>
+      <if test="record.containtax != null" >
+        containTax = #{record.containtax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.preliminary != null" >
+        preliminary = #{record.preliminary,jdbcType=INTEGER},
+      </if>
+      <if test="record.tianed != null" >
+        tianed = #{record.tianed,jdbcType=INTEGER},
+      </if>
+      <if test="record.paied != null" >
+        paied = #{record.paied,jdbcType=INTEGER},
+      </if>
+      <if test="record.balance != null" >
+        balance = #{record.balance,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentdate != null" >
+        paymentDate = #{record.paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qualificationsdate != null" >
+        qualificationsDate = #{record.qualificationsdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reportdate != null" >
+        reportDate = #{record.reportdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.contacts != null" >
+        contacts = #{record.contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactsphone != null" >
+        contactsPhone = #{record.contactsphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jieqiadate != null" >
+        jieqiaDate = #{record.jieqiadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.hetongdate != null" >
+        hetongDate = #{record.hetongdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fkUserId != null" >
+        fk_user_id = #{record.fkUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivedate != null" >
+        receiveDate = #{record.receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.collectingdata != null" >
+        collectingData = #{record.collectingdata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.monitordate != null" >
+        monitorDate = #{record.monitordate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.analysisdate != null" >
+        analysisDate = #{record.analysisdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gongcandate != null" >
+        gongcanDate = #{record.gongcandate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.neishendate != null" >
+        neishenDate = #{record.neishendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expertdate != null" >
+        expertDate = #{record.expertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.assessdate != null" >
+        assessDate = #{record.assessdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.scheduleddate != null" >
+        scheduledDate = #{record.scheduleddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualdate != null" >
+        actualDate = #{record.actualdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.getreplydate != null" >
+        getReplyDate = #{record.getreplydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update contract
+    set id = #{record.id,jdbcType=INTEGER},
+      seq = #{record.seq,jdbcType=VARCHAR},
+      registerDate = #{record.registerdate,jdbcType=TIMESTAMP},
+      client = #{record.client,jdbcType=VARCHAR},
+      projectName = #{record.projectname,jdbcType=VARCHAR},
+      contractAmount = #{record.contractamount,jdbcType=DOUBLE},
+      receipted = #{record.receipted,jdbcType=DOUBLE},
+      containTax = #{record.containtax,jdbcType=VARCHAR},
+      preliminary = #{record.preliminary,jdbcType=INTEGER},
+      tianed = #{record.tianed,jdbcType=INTEGER},
+      paied = #{record.paied,jdbcType=INTEGER},
+      balance = #{record.balance,jdbcType=INTEGER},
+      paymentDate = #{record.paymentdate,jdbcType=VARCHAR},
+      qualificationsDate = #{record.qualificationsdate,jdbcType=TIMESTAMP},
+      reportDate = #{record.reportdate,jdbcType=TIMESTAMP},
+      contacts = #{record.contacts,jdbcType=VARCHAR},
+      contactsPhone = #{record.contactsphone,jdbcType=VARCHAR},
+      jieqiaDate = #{record.jieqiadate,jdbcType=TIMESTAMP},
+      hetongDate = #{record.hetongdate,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      fk_user_id = #{record.fkUserId,jdbcType=INTEGER},
+      receiveDate = #{record.receivedate,jdbcType=TIMESTAMP},
+      collectingData = #{record.collectingdata,jdbcType=TIMESTAMP},
+      monitorDate = #{record.monitordate,jdbcType=TIMESTAMP},
+      analysisDate = #{record.analysisdate,jdbcType=TIMESTAMP},
+      gongcanDate = #{record.gongcandate,jdbcType=TIMESTAMP},
+      neishenDate = #{record.neishendate,jdbcType=TIMESTAMP},
+      expertDate = #{record.expertdate,jdbcType=TIMESTAMP},
+      assessDate = #{record.assessdate,jdbcType=TIMESTAMP},
+      scheduledDate = #{record.scheduleddate,jdbcType=TIMESTAMP},
+      actualDate = #{record.actualdate,jdbcType=TIMESTAMP},
+      getReplyDate = #{record.getreplydate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gq.beans.Contract" >
+    update contract
+    <set >
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=VARCHAR},
+      </if>
+      <if test="registerdate != null" >
+        registerDate = #{registerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="client != null" >
+        client = #{client,jdbcType=VARCHAR},
+      </if>
+      <if test="projectname != null" >
+        projectName = #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="contractamount != null" >
+        contractAmount = #{contractamount,jdbcType=DOUBLE},
+      </if>
+      <if test="receipted != null" >
+        receipted = #{receipted,jdbcType=DOUBLE},
+      </if>
+      <if test="containtax != null" >
+        containTax = #{containtax,jdbcType=VARCHAR},
+      </if>
+      <if test="preliminary != null" >
+        preliminary = #{preliminary,jdbcType=INTEGER},
+      </if>
+      <if test="tianed != null" >
+        tianed = #{tianed,jdbcType=INTEGER},
+      </if>
+      <if test="paied != null" >
+        paied = #{paied,jdbcType=INTEGER},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=INTEGER},
+      </if>
+      <if test="paymentdate != null" >
+        paymentDate = #{paymentdate,jdbcType=VARCHAR},
+      </if>
+      <if test="qualificationsdate != null" >
+        qualificationsDate = #{qualificationsdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reportdate != null" >
+        reportDate = #{reportdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contacts != null" >
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsphone != null" >
+        contactsPhone = #{contactsphone,jdbcType=VARCHAR},
+      </if>
+      <if test="jieqiadate != null" >
+        jieqiaDate = #{jieqiadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hetongdate != null" >
+        hetongDate = #{hetongdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="fkUserId != null" >
+        fk_user_id = #{fkUserId,jdbcType=INTEGER},
+      </if>
+      <if test="receivedate != null" >
+        receiveDate = #{receivedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="collectingdata != null" >
+        collectingData = #{collectingdata,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monitordate != null" >
+        monitorDate = #{monitordate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="analysisdate != null" >
+        analysisDate = #{analysisdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gongcandate != null" >
+        gongcanDate = #{gongcandate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="neishendate != null" >
+        neishenDate = #{neishendate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expertdate != null" >
+        expertDate = #{expertdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="assessdate != null" >
+        assessDate = #{assessdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scheduleddate != null" >
+        scheduledDate = #{scheduleddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualdate != null" >
+        actualDate = #{actualdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getreplydate != null" >
+        getReplyDate = #{getreplydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gq.beans.Contract" >
+    update contract
+    set seq = #{seq,jdbcType=VARCHAR},
+      registerDate = #{registerdate,jdbcType=TIMESTAMP},
+      client = #{client,jdbcType=VARCHAR},
+      projectName = #{projectname,jdbcType=VARCHAR},
+      contractAmount = #{contractamount,jdbcType=DOUBLE},
+      receipted = #{receipted,jdbcType=DOUBLE},
+      containTax = #{containtax,jdbcType=VARCHAR},
+      preliminary = #{preliminary,jdbcType=INTEGER},
+      tianed = #{tianed,jdbcType=INTEGER},
+      paied = #{paied,jdbcType=INTEGER},
+      balance = #{balance,jdbcType=INTEGER},
+      paymentDate = #{paymentdate,jdbcType=VARCHAR},
+      qualificationsDate = #{qualificationsdate,jdbcType=TIMESTAMP},
+      reportDate = #{reportdate,jdbcType=TIMESTAMP},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      contactsPhone = #{contactsphone,jdbcType=VARCHAR},
+      jieqiaDate = #{jieqiadate,jdbcType=TIMESTAMP},
+      hetongDate = #{hetongdate,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      fk_user_id = #{fkUserId,jdbcType=INTEGER},
+      receiveDate = #{receivedate,jdbcType=TIMESTAMP},
+      collectingData = #{collectingdata,jdbcType=TIMESTAMP},
+      monitorDate = #{monitordate,jdbcType=TIMESTAMP},
+      analysisDate = #{analysisdate,jdbcType=TIMESTAMP},
+      gongcanDate = #{gongcandate,jdbcType=TIMESTAMP},
+      neishenDate = #{neishendate,jdbcType=TIMESTAMP},
+      expertDate = #{expertdate,jdbcType=TIMESTAMP},
+      assessDate = #{assessdate,jdbcType=TIMESTAMP},
+      scheduledDate = #{scheduleddate,jdbcType=TIMESTAMP},
+      actualDate = #{actualdate,jdbcType=TIMESTAMP},
+      getReplyDate = #{getreplydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
